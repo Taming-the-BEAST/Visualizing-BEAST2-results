@@ -29,18 +29,7 @@ R ([https://www.r-project.org](https://www.r-project.org)) is a programming lang
 
 RStudio ([https://www.rstudio.com](https://www.rstudio.com)) is an integrated development environment (IDE) for R that provides a user-friendly interface to write, run, and debug R code. It simplifies data analysis workflows by offering features like script editors, project management, and built-in plotting tools. It is optional but will provide better user experience.
 
-The tutorial will use R packages:
-  - `beastio`
-  - `bdskytools`
-
-Install R packages using:
-
-```r
-install.packages("devtools")
-library(devtools)
-devtools::install_github("laduplessis/beastio")
-devtools::install_github("laduplessis/bdskytools")
-```
+We will install R packages for data processing and visualisation along the way.
 
 ----
 
