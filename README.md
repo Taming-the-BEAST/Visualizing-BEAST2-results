@@ -1,19 +1,20 @@
 ---
-author: Author I. Name
+author: Cecilia Valenzuela Agüí, Ugnė Stolz
 level: Intermediate
-title: Tutorial template
-subtitle: Template for an empty tutorial
-beastversion: 2.4.2
+date: 2024-06-12
+title: Visualizing BEAST2 results in R
+beastversion: 2.7.x
+
 ---
 
 
 # Background
 
-This is a template tutorial and style guide to help formatting Markdown tutorials. 
+Analyzing and interpreting the extensive output generated in Bayesian phylodynamic analyses can sometimes be a challenging task. This tutorial aims to provide insights into scientific figure design techniques and resources in R that can effectively visualize BEAST2 results.
 
-Please start the tutorial by adding some background about the tutorial in this section, clearly explaining the question/problem and the type of analysis that the methods in the tutorial should be used for. In the next section please add a short description of all the programs or packages used in the tutorial. The tutorial exercise should follow this part. Please add a short explanation on the dataset used in the tutorial before starting with the exercise. Please also add a section after the exercise interpreting the results. End your tutorial with some useful links.
+By employing appropriate visualizations, we can enhance our understanding of the evolutionary processes and facilitate the effective communication of findings.
 
-Some of the text in this tutorial template is just dummy filler text. Please do not try to understand it.
+In most BEAST2 analyses, the results consist of two files: the posterior sample of phylogenetic trees (.trees file) and the parameters (.log file). These are long files containing MCMC samples and we will need to summarise them to be able to understand the results.
 
 ----
 
@@ -21,191 +22,340 @@ Some of the text in this tutorial template is just dummy filler text. Please do 
 
 ### BEAST2 - Bayesian Evolutionary Analysis Sampling Trees 2
 
-BEAST2 is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees {% cite Bouckaert2014 --file Tutorial-Template/master-refs.bib %}. This tutorial uses the BEAST2 version 2.4.2.
+BEAST2 (http://www.beast2.org) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial assumes that the files came from analyses using the BEAST2 version v{{ page.beastversion }} {% cite Bouckaert2014 Bouckaert2019 --file Troubleshooting-initialization-issues/master-refs %}.
+
+### R and RStudio
+R ([https://www.r-project.org](https://www.r-project.org)) is a programming language and software environment designed for statistical computing, data analysis, and graphical visualization. It is widely used in bioinformatics, data science, and statistical modeling due to its extensive package ecosystem and flexibility.
+
+RStudio ([https://www.rstudio.com](https://www.rstudio.com)) is an integrated development environment (IDE) for R that provides a user-friendly interface to write, run, and debug R code. It simplifies data analysis workflows by offering features like script editors, project management, and built-in plotting tools. It is optional but will provide better user experience.
+
+The tutorial will use R packages:
+  - `beastio`
+  - `bdskytools`
+
+Install R packages using:
+
+```r
+install.packages("devtools")
+library(devtools)
+devtools::install_github("laduplessis/beastio")
+devtools::install_github("laduplessis/bdskytools")
+```
 
 ----
 
-# Practical: Exercise title
+# Motivation and Tips for BEAST2 results visualization
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta augue id vulputate iaculis. Sed non posuere lectus. Integer at magna quis nulla tempus cursus. Integer ut nisl elit. Nam pellentesque pharetra orci eu facilisis. Nullam vitae leo tempus nunc consequat finibus ut ut nisi. Phasellus vitae faucibus dolor, id venenatis lacus. Sed eu lacus a nibh luctus semper. Proin non tellus odio. Duis elementum lorem eget nisl rhoncus feugiat. In hendrerit vehicula purus. Aliquam ornare libero quis tincidunt efficitur. Nam sapien augue, mattis nec hendrerit ut, commodo in nisi.
+When generating scientific figures based on abundant Bayesian MCMC results, there are several important considerations to keep in mind.
+- **Display Uncertainty**: Bayesian analysis provides posterior distributions that capture the uncertainty of parameter estimates, including tree topology, branch lengths, and evolutionary rates. Displaying this uncertainty is important for robust interpretation. This can be done by showing the 95% HPD interval around key parameters, like node heights with error bars, or visualizations such as boxplots or density plots for the posterior probability of the parameters. Avoid presenting point estimates without any indication of the associated uncertainty.
+- **Clarity of Tree Representations**: Trees are complex objects depicting numerous relationships between samples. Extracting valuable insights from trees heavily relies on a clear representation. Avoid cluttering the tree with too many branches or overlapping labels. Use annotations to highlight key clades or important nodes in the tree. Don’t forget to include the scale or axis in your tree.
+- **Tell a story**: With the abundance of information in BEAST2 results, it is important to have a clear objective for the main result you wish to communicate. Otherwise, the figure may become excessively complex and lose its meaning. Utilize color, shape, and size variations to emphasize significant patterns. Incorporate the temporal and geographical information present in the parameters, such as utilizing skyline plots or geographical maps instead of visualizing individual parameters. Prior to plotting, summarize or transform the results if needed.
+- **Experiment**. There is not just one way of visualizing a set of results, so do not be afraid of experimenting with different type of plots. Interactive visualization tools can also be useful to interpret and communicate complex data. These tools enable exploration and manipulation of the results in real time, so they will work well for online and interactive presentations (but not for in a PDF document).
 
-## This is a subsection
-Quisque a dictum erat. Curabitur congue sapien sit amet pharetra pretium. Proin posuere euismod velit, eget faucibus ex varius id. Fusce sodales maximus malesuada. Mauris auctor dui in justo interdum egestas. Cras dapibus commodo nulla vitae congue. Vestibulum sit amet justo sit amet ex pretium bibendum. Donec ac mollis lorem, vel semper enim. Suspendisse sit amet auctor dui. Nullam ac efficitur mauris. Proin aliquam tincidunt felis nec semper. Vestibulum vestibulum, eros sit amet consectetur blandit, elit dolor posuere sem, a porta purus odio sit amet quam. Quisque dapibus erat sem, at vulputate libero dapibus sit amet. Mauris rhoncus odio nisl, nec interdum lacus consequat nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+Remember, figures should be self-explanatory and provide sufficient context to be understood. Seek feedback from colleagues or mentors to improve the clarity and effectiveness of your figures.
 
-Etiam tincidunt porttitor rutrum. Nulla facilisi. Mauris vehicula, justo ac ultricies tempus, quam erat hendrerit dui, vel pharetra sapien nibh vel ex. Sed molestie eu dui in laoreet. Pellentesque ultrices, orci vitae lacinia suscipit, erat sapien elementum ligula, sit amet viverra ante lorem eget elit. Cras euismod felis libero, pharetra lobortis arcu congue vehicula. Nullam posuere dapibus mauris, eget vulputate ligula auctor eget. Aenean et tempus est. Aliquam vehicula arcu vitae metus dictum viverra. Aliquam vitae purus mauris. Nullam interdum mauris eget sagittis consequat. Quisque in orci elementum, eleifend tortor eget, bibendum orci. Etiam aliquet dolor non neque semper fermentum. Praesent vitae venenatis mi, ut faucibus ligula. Phasellus vitae lorem neque. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+Next, you will find a few code snippets with examples to visualize the most common type of plots from BEAST2 results. It is not an extensive tutorial (you can find a lot of good resources on that at the end of each section). We assume that you have a working knowledge of R and ggplot.
 
-### This is a sub-subsection
-Etiam posuere urna ut condimentum sagittis. Suspendisse posuere, ex nec eleifend fringilla, nisl augue posuere augue, elementum mollis justo felis sed purus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris efficitur eros ut turpis elementum vestibulum. Sed sit amet nisi at nunc luctus laoreet id ac enim. Aliquam elementum risus id urna dictum fringilla. Aenean lobortis, risus euismod molestie pulvinar, massa odio pharetra nulla, vitae facilisis neque magna sed lorem. Praesent ipsum enim, commodo ut pharetra in, sollicitudin ac massa. Donec et interdum mauris. Ut molestie, risus quis fermentum placerat, diam risus posuere nisi, eget viverra tortor neque ac sem. Donec viverra magna non dolor aliquam, in suscipit massa facilisis. Suspendisse congue arcu sed risus consectetur commodo. Aenean metus odio, volutpat at tincidunt id, ullamcorper in dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras ut sem in odio sodales iaculis non quis neque.
+# How to visualize BEAST2 summary tree in R with ggtree
 
-Quisque non mollis massa, nec eleifend dolor. Proin porta elit metus, a lobortis enim venenatis ac. Nam scelerisque consectetur mi et gravida. Vestibulum placerat, est vitae euismod finibus, purus nisl viverra quam, eget condimentum mauris magna vel nisl. Phasellus pretium vitae diam in volutpat. Cras gravida non quam ut consectetur. Vivamus congue vulputate lorem.
+To visualize trees there are multiple tools and packages available: [FigTree](http://beast.community/figtree), [Densitree](https://www.cs.auckland.ac.nz/~remco/DensiTree/DensiTree.html), [IcyTree](https://bioconductor.org/packages/release/bioc/html/ggtree.htmltidytreeicytree.org), R packages: [ggtree](https://bioconductor.org/packages/release/bioc/html/ggtree.htmltidytree), [phytools](https://cran.r-project.org/web/packages/phytools/index.html), [ape](https://cran.r-project.org/web/packages/ape/index.html), python packages: [Biopython Phylo](https://biopython.org/wiki/Phylo), [ETE toolkits](http://etetoolkit.org/) and many more. 
+**IcyTree** is great for quick visualization and exploration of trees. For publication-ready figures, you can use **FigTree** and **ggtree** or other R and python packages. **Densitree** is a program for qualitative analysis of set of trees. In this tutorial we will focus in R and the ggtree package.
 
-## This is another subsection
-Praesent sodales est in tempor commodo. Suspendisse nulla metus, gravida eget malesuada vel, viverra eu felis. In vitae leo facilisis, ornare nunc nec, tempor tortor. Duis pretium mi eros, at consequat neque tincidunt eget. Mauris vestibulum venenatis arcu, eget lacinia arcu faucibus ut. Phasellus aliquam dui ipsum, a eleifend lacus fermentum at. Suspendisse congue orci quis ante consequat ornare. Integer a massa blandit, vestibulum eros ut, pulvinar augue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+### 1. Install and load the required packages
 
-Quisque a urna a massa congue rhoncus. Donec bibendum tempus velit. Nam varius augue sit amet lacinia hendrerit. Proin tincidunt massa ut mi vestibulum placerat. Phasellus eget dui molestie, aliquet libero efficitur, vehicula ex. Pellentesque ultricies ante leo, eu lobortis odio convallis id. Donec vitae risus dui. Nulla orci velit, ultricies sed finibus quis, blandit quis arcu. Morbi non neque non odio rutrum condimentum. Vivamus libero metus, vehicula vitae elit ac, tincidunt pretium dui. Proin condimentum fringilla diam, blandit blandit nisl dapibus vel. Proin ante felis, accumsan eget ligula et, lobortis dictum nunc. Mauris a ante dignissim ipsum tincidunt tristique.
-
--------
-
-# Tutorial style guide
-
-## Text styling
-
-This is how to write _italic text_.
-
-This is how to write **bold text**.
-
-This is how to write **_bold and italic text_**.
-
-Do text superscripts like this 7^th, x^2y or  x^(2y + 3z).
-
-
-## Lists
-
-### Unnumbered lists
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-- Integer pharetra arcu ut nisl mollis ultricies.
-	- Fusce nec tortor at enim cursus dictum.
-	- Phasellus nec urna quis velit eleifend convallis sodales nec augue.
-- In iaculis turpis in massa facilisis, quis ultricies nibh ultricies.
-- Nam vitae turpis eu lacus imperdiet mollis id at augue.
-- Sed sed turpis ac dolor mollis accumsan.
-
-
-### Numbered lists
-
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-2. Integer pharetra arcu ut nisl mollis ultricies.
-	1. Fusce nec tortor at enim cursus dictum.
-	2. Phasellus nec urna quis velit eleifend convallis sodales nec augue.
-1. In iaculis turpis in massa facilisis, quis ultricies nibh ultricies.
-1. Nam vitae turpis eu lacus imperdiet mollis id at augue.
-1. Sed sed turpis ac dolor mollis accumsan.
-
-### Mixed lists
-
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-2. Integer pharetra arcu ut nisl mollis ultricies.
-	* Fusce nec tortor at enim cursus dictum.
-	* Phasellus nec urna quis velit eleifend convallis sodales nec augue.
-1. In iaculis turpis in massa facilisis, quis ultricies nibh ultricies.
-1. Nam vitae turpis eu lacus imperdiet mollis id at augue.
-1. Sed sed turpis ac dolor mollis accumsan.
-
-
-## Figures
-
-
-<figure>
-	<a id="fig:example1"></a>
-	<img style="width:25%;" src="figures/Logo_bw.png" alt="">
-	<figcaption>Figure 1: This figure is 25% of the page width.</figcaption>
-</figure>
-
-
-<figure>
-	<a id="fig:example2"></a>
-	<img style="width:10%;" src="figures/Logo_bw.png" alt="">
-	<figcaption>Figure 2: This figure is only 10% of the page width.</figcaption>
-</figure>
-
-
-
-# Code
-
-A bit of inline monospaced font can be made `like this`. Larger code blocks can be made by using the code environment:
-
-Java:
-
-```java
-public class HelloWorld {
-
-    public static void main(String[] args) {
-        // Prints "Hello, World" to the terminal window.
-        System.out.println("Hello, World");
-    }
-
-}
-```
-
-XML:
-
-```xml
-	<BirthDeathSkylineModel spec="BirthDeathSkylineModel" id="birthDeath" tree="@tree" contemp="true">
-	      <parameter name="origin" id="origin" value ="100" lower="0."/>    
-	      <parameter name="R0" id="R0" value="2" lower="0." dimension ="10"/>
-	      <parameter name="becomeUninfectiousRate" id="becomeUninfectiousRate" value="1" lower="0." dimension ="10"/>
-	      <parameter name="samplingProportion" id="samplingProportion" value="0."/>
-	      <parameter name="rho" id="rho" value="1e-6" lower="0." upper="1."/>
-	</BirthDeathSkylineModel>
-```
-
-R:
+The R code below will install the metapackage *treedataverse* that includes several useful packages for processing and visualizing trees in R: *treeio, ggtree, ggtreeExtra* and *tidytree*.
 
 ```R
-	> myString <- "Hello, World!"
-	> print (myString)
-	[1] "Hello, World!"
+	# Install packages
+	install.packages("BiocManager")
+	install.packages("ggsci")
+	BiocManager::install("YuLab-SMU/treedataverse")
+
+	# Load packages
+	library(treedataverse)
+	library(ggsci) # nice library for color palettes
 ```
 
-# Equations
+### 2. Read the BEAST summary tree and metadata 
 
-Inline equations: {% eqinline \dot{x} = \sigma(y-x) %}
+In general, we will visualize a summary tree from the posterior samples of trees, e.g. we can create a Maximum Clade Credibility (MCC) tree with TreeAnnotator.
 
-Displayed equations: 
-{% eq \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right) %}
+```R
+	tree_file <- "data/Primates.MCC.tree"
+	tree <- read.beast(tree_file)
+```
+
+### 3. Plot the tree with backward in time axis
+
+```R
+	p <- ggtree(tree,  mrsd = NULL) + 
+  		theme_tree2() + # This ggtree theme will add a forward in time x-axis
+  		labs(caption="million of years")
+	p <- revts(p) # This will reverse the time in the axis 
+	p
+```
+
+Usually, with epidemiological datasets, you will want a forward in time x-axis in calendar time. In this case, use `theme_tree2()` and the parameter `mrsd` in the in `ggtree()` function equal to the most recent sample date.
+
+### 4. Customize tree labels
+
+```R
+	p1 <- p +
+  		geom_tiplab(size = 3, hjust = -0.1) + # add the tip labels
+  		geom_nodelab(aes(label = round(posterior, 3)), 
+               		hjust = 1.5, vjust = -0.5, size = 3) + # add posterior value to internal nodes
+  		xlim_tree(20) # adjust x axis to show full tip names
+
+	p1
+```
+
+### 5. Add error bars
+
+```R
+	p1 <- p1 +
+  		geom_range(range = 'height_0.95_HPD',
+             	color = pal_jco("default")(1), alpha = 0.2, size = 2) 
+	p1
+```
+
+### 6. Customize tips and color
+
+```R
+	p1 <- p1 +
+  		geom_point(aes(color = isTip)) + # add tip points and color by tip/internal node
+  		theme(legend.position = "none") + # hide the legend
+  		scale_color_jco() # select color palette
+	p1
+
+```
+
+### 7. Annotate the tree with external data
+
+If you have external data you can add it to your ggtree object and use it to highlight specific branches or clades.
+
+```R
+
+	# Data with cleaned label and classification
+	# Usually you will have this information in a file that you can directly load:
+	# metadata <- read_csv(metadata_file)
+
+	metadata <- as_tibble(tree) %>%
+  		filter(!is.na(label)) %>%
+  		mutate(new_label = gsub("M.", "Macaca", gsub("_", " ", tree@phylo$tip.label)),
+         		group = c("Apes", "Apes", "Apes", "Lemurs", 
+                   	"Old World monkey", "Old World monkey", "Old World monkey", "Old World monkey",
+                   	"Apes", "Apes", "New World monkey", "Tarsiers")) %>%
+  		group_by(group) %>%
+  		mutate(clade = MRCA(tree, node)) %>%
+  		ungroup %>%
+  		select(node, label, new_label, clade, group)
+
+
+	# Highlight clades
+	p2 <- p +
+   		geom_hilight(data = metadata, 
+                	mapping = aes(node = clade, fill = group),
+                	type = "gradient", gradient.direction = 'rt',alpha = 0.8) +
+  	geom_tree() +
+  		scale_fill_npg(name = "") 
+
+	# Add previous layers on top of highlighted clades
+	p2 <- p2 %<+% metadata + # you can also left join external data to use it
+ 		 geom_tiplab(aes(label = new_label),
+              		size = 3, hjust = -0.1) + # add the tip labels
+  		xlim_tree(30) +
+  		geom_nodelab(aes(label = round(posterior, 3)), 
+               		hjust = 1.5, vjust = -0.5, size = 3) + # add posterior value to internal nodes
+  		geom_range(range = 'height_0.95_HPD',
+             		color = "grey30", alpha = 0.2, size = 2) +
+  		theme(legend.position = "top") + # This ggtree theme will add a forward in time x-axis
+  		labs(caption="million of years") # This will reverse the time in the axis 
+	p2
+
+```
+
+## Much more in ggtree
+
+The book [“Data Integration, Manipulation and Visualization of Phylogenetic Trees”](http://yulab-smu.top/treedata-book/) by Guangchuang Yu (author of `ggtree`) is a great guide to visualization of phylogenetic trees with ggtree. It has a lot of examples and a clear structure to navigate it. There are many more things you can do, like adding heatmaps as annotations for your tips, or including images. Go and check it out!
+
+# How to visualize parameter posterior samples in R with beastio and ggplot2
+
+The posterior samples of the model parameters are in the `.log` file. This file is a text file that we can read into R and manipulate as a dataframe. However, there are packages that facilitate the data manipulation and processing of log files. In the following examples we will use the `beastio` package to this purpose, and `ggplot2` for data visualization.
+
+### 1. Install and load the required packages
+
+```R
+	BiocManager::install("laduplessis/beastio")
+
+	library(tidyr)
+	library(tibble) # for data frame manipulation
+	library(beastio)
+
+```
+
+### 2. Read the .log file
+
+```R
+	file <- "data/primate-mtDNA_long.log"
+
+	# Read log file with 10% burnin
+	trace_mcmc <- beastio::readLog(file, burnin = 0.1, as.mcmc = TRUE) # as mcmc object
+	trace <- beastio::readLog(file, burnin = 0.1, as.mcmc = FALSE) # as dataframe for ggplot
+
+	# Get 95% HPDs for all parameters
+	hpds <- beastio::getHPDMedian(trace_mcmc)
+
+```
+
+### 3. Tidy the data and plot the posterior distribution 
+
+Depending on the figure you would like to create, you may need to tidy the data to make it suitable for `ggplot` ([more on tidy data](https://r4ds.had.co.nz/tidy-data.html)).
+
+```R
+	# Select mutation rates parameters and prepare the data for plotting
+	mut_rates <- beastio::getLogFileSubset(trace, pattern = "mutationRate") %>%
+  		pivot_longer(everything(), names_to = "mutationRate", values_to = "value") %>%
+ 		 mutate(mutationRate = gsub("mutationRate.", "", mutationRate))
+
+	hpds_mut_rates <- beastio::getHPDMedian(getLogFileSubset(trace_mcmc, pattern = "mutationRate")) %>%
+  		as_tibble(rownames = "mutationRate") %>%
+		mutate(mutationRate = gsub("mutationRate.", "", mutationRate))
+```
+
+### 4. Choose the Plot Type
+
+Select the appropriate type of plot for visualizing the posterior distribution. Histograms, density plots, boxplots, violins, and ridgeline plots are commonly used to visualize Bayesian posterior distributions.
+
+- **Density Plot**: Use the `geom_density` function to create a density plot. This will estimate and display the probability density function of the parameter values.
+
+```R
+	# Density plot
+	ggplot() +
+		geom_density(data = mut_rates,
+               		aes(x = value, color = mutationRate, fill = mutationRate), 
+               		alpha = 0.5) +
+  		geom_vline(data = hpds_mut_rates, # Add median line
+             		aes(xintercept = med, color = mutationRate), size = 0.4, linetype = 2) +
+  		theme_minimal() +
+  		theme(legend.position = c(0.92, 0.8)) +
+  		scale_color_jco(name = "") +
+  		scale_fill_jco(name = "") +
+  		labs(title = "Primate mitochondrial genome estimated mutation rate") +
+  		xlab("Mutation rate")
+```
 
 
 
-## Instruction boxes
+- **Boxplot and Violin Plot**: Use `geom_boxplot` and `geom_violi`n functions to create boxplots and violin plots.
 
-Use block-quotes for step-by-step instruction that the user should perform (this will produce a framed box on the website):
+```R
+	p_mut_rates <- ggplot(data = mut_rates,
+			aes(x = mutationRate, y = value, color = mutationRate, fill = mutationRate)) +
+  		geom_violin(alpha = 0.2) +
+  		geom_boxplot(width = 0.1, outlier.shape = NA, alpha = 0.2) +
+  		theme_minimal() +
+  		theme(legend.position = "none") +
+  		scale_color_jco(name = "") +
+  		scale_fill_jco(name = "") +
+  		xlab("Mutation rate")
+	p_mut_rates + labs(title = "Primate mitochondrial genome estimated mutation rate") 
+```
 
-> The data we have is not the data we want, and the data we need is not the data we have.
-> 
-> We can input **any** formatted text in here:
->
-> - Even
-> - Lists
->
-> or equations:
->
-> {% eq (x_1, \ldots, x_n) \left( \begin{array}{ccc}
-      \phi(e_1, e_1) & \cdots & \phi(e_1, e_n) \\
-      \vdots & \ddots & \vdots \\
-      \phi(e_n, e_1) & \cdots & \phi(e_n, e_n)
-    \end{array} \right)
-  \left( \begin{array}{c}
-      y_1 \\
-      \vdots \\
-      y_n
-    \end{array} \right) %}
+## Skyline plots
 
+In a skyline analysis, we are interested in visualizing the estimated rates over time. Follow the steps on the Skyline Plots Tutorial for a more detailed explanation on how to create a skyline plot in R with the `bdskytools` package. You can find the code from that tutorial in the next code snippet:
 
+```R
+	BiocManager::install("laduplessis/bdskytools")
+	library(bdskytools)
+```
 
 
+```R
+	file_bdsky <- "data/hcv_bdsky.log"   
+	trace_bdsky  <- readLogfile(file_bdsky, burnin = 0.1)
+
+	Re_sky <- getSkylineSubset(trace_bdsky, "reproductiveNumber")
+	Re_hpd <- getMatrixHPD(Re_sky)
+	delta_hpd <- getHPD(trace_bdsky$becomeUninfectiousRate)
+
+	timegrid <- seq(0, 400, length.out = 101)
+	Re_gridded  <- gridSkyline(Re_sky, trace_bdsky$origin, timegrid)
+	Re_gridded_hpd <- getMatrixHPD(Re_gridded)
+
+	times <- 1993 - timegrid
+
+	par(mar=c(5,4,4,4)+0.1)
+	plotSkylinePretty(range(times), as.matrix(delta_hpd), type='step', axispadding=0.0, 
+                  col=pal.dark(cblue), fill=pal.dark(cblue, 0.5), col.axis=pal.dark(cblue), 
+                  ylab=expression(delta), side=4, yline=2, ylims=c(0,1), xaxis=FALSE)
+
+	plotSkylinePretty(times, Re_gridded_hpd, type='smooth', axispadding=0.0, 
+                  col=pal.dark(corange), fill=pal.dark(corange, 0.5), col.axis=pal.dark(corange), 
+                  xlab="Time", ylab=expression("R"[e]), side=2, yline=2.5, xline=2, xgrid=TRUE, 
+                  ygrid=TRUE, gridcol=pal.dark(cgray), ylims=c(0,3), new=TRUE, add=TRUE)
+	title("Hepatitis C in Egypt", adj = 0)
+```
+
+## Arranging plots
+
+In the previous example of skyline plot, we combined the visualizations of `Re` and the `becoming uninfectious rate` estimates. Grouping plots together can be useful to have a comprehensive understanding of the data or in identifying patterns and emphasizing key findings.
+
+In R, there are various methods to arrange plots together. You can plot several parameters within a single figure, as shown in the previous example, or use the `geom_facet()` function in `ggplot`. Alternatively, you can use a package to arrange several independent plots such as `gridExtra`, `cowplot`, `patchwork` or `ggpubr`.
+
+In the following example we will show how to use `patchwork` ([https://patchwork.data-imaginist.com/](https://patchwork.data-imaginist.com/)).
+
+```R
+	install.packages("patchwork")
+```
+
+You can arrange plots with the operator `+`. With the operator `|` the plots will be next to each other and with `/` they will be placed on top of each other. You can adjust the number of columns, widths and more with `plot_layout()`.
+
+```R
+
+	library(patchwork)
+
+	p_clock_rate <- ggplot(trace) +
+  		geom_density(aes(x = clockRate)) +
+  		geom_vline(xintercept = getHPD(trace$clockRate)[[2]], linetype = 2) +
+  		xlab("Clock rate") +
+  		theme_minimal() 
+
+	p2 + ggtitle("Primates evolution") + 
+  		p_clock_rate / p_mut_rates + 
+  		plot_layout(widths = c(0.7, 0.3)) 
+
+```
+
+# About color palettes
+
+When choosing color palettes in R, there are several resources available that can help you select visually appealing and effective color schemes. Here are some popular resources:
+- Color palettes in R: `RColorBrewer`, `ggsci`, `paleteer`, `viridis`, `wesanderson`.
+- You can also create your own color palettes. Online tools like [Chroma.js](https://gka.github.io/palettes/) and [Viz Palette](https://projects.susielu.com/viz-palette) can help you to select better combinations and make your palette colorblind safe.
+
+And here is a useful article about the topic: [best color palettes for scientific figures and data visualizations](https://www.simplifiedsciencepublishing.com/resources/best-color-palettes-for-scientific-figures-and-data-visualizations).
 
 
-# Hyperlinks
+# General tips for scientific figures
+1. **Clear and Concise Communication**: Figures should effectively convey the main findings or message of your research. Ensure that the figure’s content is clear, concise, and easily understandable to your target audience. Avoid clutter or unnecessary details that may confuse or distract from the main point.
 
-Add links to figures like this: 
+2. **Proper Data Representation**: Select the most appropriate visualization type for your data (e.g., bar chart, line plot, scatter plot, heat map) to accurately represent the relationships, patterns, or trends you want to highlight.
 
-- [Figure 1](#fig:example1) is 25% of the page width.
-- [Figure 2](#fig:example2) is 10% of the page width. 
+3. **Adequate Labels and Annotations**: Provide clear and informative labels for axes, data points, and other elements within the figure. Use descriptive titles, axis labels, and legends to provide context and help viewers understand the information presented.
 
-Add links to external URLs like [this](http://www.google.com). 
+4. **Consistency and Reproducibility**: Maintain consistency in terms of scale, symbols, colors, and formatting across multiple figures within your study. This consistency ensures that comparisons can be made easily and accurately. Additionally, provide sufficient details, such as data sources or statistical methods used, to allow others to reproduce or validate your results.
 
-Links to equations or different sections within the same document are a little buggy.
+5. **Aesthetics and Readability**: Pay attention to the overall visual appeal of your figures. Use appropriate colors, fonts, and sizes to enhance readability and ensure that the figure is visually appealing. Choose colors that are easily distinguishable and consider accessibility guidelines to ensure that your figures can be understood by individuals with color vision deficiencies. Use high-resolution images or scalable vector graphics (SVG) to ensure figures are clear and legible when printed or zoomed.
 
 
-----
+# Resources data visualization in R
 
-# Useful Links
+There are very good resources for data visualization in R. Here some of our favorites:
 
-- [Bayesian Evolutionary Analysis with BEAST 2](http://www.beast2.org/book.html) {% cite BEAST2book2014 --file Tutorial-Template/master-refs.bib %}
-- BEAST 2 website and documentation: [http://www.beast2.org/](http://www.beast2.org/)
-- BEAST 1 website and documentation: [http://beast.bio.ed.ac.uk](http://beast.bio.ed.ac.uk)
-- Join the BEAST user discussion: [http://groups.google.com/group/beast-users](http://groups.google.com/group/beast-users) 
+- [Fundamentals of Data Visualization by Claus O. Wilke](https://clauswilke.com/dataviz/) A guide to making visualizations that “accurately reflect the data, tell a story, and look professional.” Amazing resource to understand the best way to visualize each type of data and with useful advice on how to communicate a message with it.
+- [The R Graph Gallery](https://r-graph-gallery.com/): A comprehensive online collection of diverse and visually appealing data visualizations created using R. Great for inspiration!
+- [ggplot2 Package Documentation](https://ggplot2.tidyverse.org/): The official documentation for the ggplot2 package provides detailed explanations and examples for each function and feature. It also includes a Cheatsheet!
+- [The R Graphics Cookbook by Winston Chang](https://r-graphics.org/) offers practical recipes and examples for creating a wide range of plots using ggplot2.
 
 ----
 
