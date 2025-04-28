@@ -45,16 +45,19 @@ When generating scientific figures based on abundant Bayesian MCMC results, ther
 	<figcaption>Figure 1: Divergence times of extant bears estimated under the FBD model in BEAST2. Grey horizontal bars show their uncertainty inytervals. {% cite Heath2014 --file Visualizing-BEAST2-results
 /master-refs %} </figcaption>
 </figure>
-  
+<br>
+
+
 - **Clarity of Tree Representations**: Trees are complex objects depicting numerous relationships between samples. Extracting valuable insights from trees heavily relies on a clear representation. Avoid cluttering the tree with too many branches or overlapping labels. Use annotations to highlight key clades or important nodes in the tree. Don’t forget to include the scale or axis in your tree.
 - **Tell a story**: With the abundance of information in BEAST2 results, it is important to have a clear objective for the main result you wish to communicate. Otherwise, the figure may become excessively complex and lose its meaning. Utilize color, shape, and size variations to emphasize significant patterns. Incorporate the temporal and geographical information present in the parameters, such as utilizing skyline plots or geographical maps instead of visualizing individual parameters. Prior to plotting, summarize or transform the results if needed.
 
 <figure>
 	<a id="Fig2"></a>
-	<img style="width:40.0%;" src="figures/Fig2" alt="">
-	<figcaption>Figure 2: Tell a story: [Nextrain](https://moodle-app2.let.ethz.ch/pluginfile.php/2059786/mod_resource/content/1/nextstrain.org) provides interactive visualization of pathogen genome data </figcaption>
+	<img style="width:40.0%;" src="figures/Fig2.png" alt="">
+	<figcaption>Figure 2: Tell a story: [Nextrain](https://nextstrain.org) provides interactive visualization of pathogen genome data </figcaption>
 </figure>
-  
+<br>
+
 - **Experiment**. There is not just one way of visualizing a set of results, so do not be afraid of experimenting with different type of plots. Interactive visualization tools can also be useful to interpret and communicate complex data. These tools enable exploration and manipulation of the results in real time, so they will work well for online and interactive presentations (but not for in a PDF document).
 
 Remember, figures should be self-explanatory and provide sufficient context to be understood. Seek feedback from colleagues or mentors to improve the clarity and effectiveness of your figures.
@@ -100,6 +103,14 @@ In general, we will visualize a summary tree from the posterior samples of trees
 	p
 ```
 
+<figure>
+	<a id="Fig3"></a>
+	<img style="width:40.0%;" src="figures/Fig3.png" alt="">
+	<figcaption>Figure 3: Tree with backward in time axis. </figcaption>
+</figure>
+<br>
+
+
 Usually, with epidemiological datasets, you will want a forward in time x-axis in calendar time. In this case, use `theme_tree2()` and the parameter `mrsd` in the in `ggtree()` function equal to the most recent sample date.
 
 ### 4. Customize tree labels
@@ -114,6 +125,13 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
 	p1
 ```
 
+<figure>
+	<a id="Fig4"></a>
+	<img style="width:40.0%;" src="figures/Fig4.png" alt="">
+	<figcaption>Figure 4: Tree with custom labels. </figcaption>
+</figure>
+<br>
+
 ### 5. Add error bars
 
 ```R
@@ -122,6 +140,12 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
              	color = pal_jco("default")(1), alpha = 0.2, size = 2) 
 	p1
 ```
+<figure>
+	<a id="Fig5"></a>
+	<img style="width:40.0%;" src="figures/Fig5.png" alt="">
+	<figcaption>Figure 5: Tree with error bars. </figcaption>
+</figure>
+<br>
 
 ### 6. Customize tips and color
 
@@ -133,6 +157,14 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
 	p1
 
 ```
+
+<figure>
+	<a id="Fig6"></a>
+	<img style="width:40.0%;" src="figures/Fig6.png" alt="">
+	<figcaption>Figure 6: Tree with custom tips and color. </figcaption>
+</figure>
+<br>
+
 
 ### 7. Annotate the tree with external data
 
@@ -179,6 +211,13 @@ If you have external data you can add it to your ggtree object and use it to hig
 
 ```
 
+<figure>
+	<a id="Fig7"></a>
+	<img style="width:40.0%;" src="figures/Fig7.png" alt="">
+	<figcaption>Figure 7: Tree with external data. </figcaption>
+</figure>
+<br>
+
 ## Much more in ggtree
 
 The book [“Data Integration, Manipulation and Visualization of Phylogenetic Trees”](http://yulab-smu.top/treedata-book/) by Guangchuang Yu (author of `ggtree`) is a great guide to visualization of phylogenetic trees with ggtree. It has a lot of examples and a clear structure to navigate it. There are many more things you can do, like adding heatmaps as annotations for your tips, or including images. Go and check it out!
@@ -197,6 +236,7 @@ The posterior samples of the model parameters are in the `.log` file. This file 
 	library(beastio)
 
 ```
+
 
 ### 2. Read the .log file
 
@@ -249,7 +289,12 @@ Select the appropriate type of plot for visualizing the posterior distribution. 
   		xlab("Mutation rate")
 ```
 
-
+<figure>
+	<a id="Fig8"></a>
+	<img style="width:40.0%;" src="figures/Fig8.png" alt="">
+	<figcaption>Figure 8: Density plot. </figcaption>
+</figure>
+<br>
 
 - **Boxplot and Violin Plot**: Use `geom_boxplot` and `geom_violi`n functions to create boxplots and violin plots.
 
@@ -265,6 +310,13 @@ Select the appropriate type of plot for visualizing the posterior distribution. 
   		xlab("Mutation rate")
 	p_mut_rates + labs(title = "Primate mitochondrial genome estimated mutation rate") 
 ```
+
+<figure>
+	<a id="Fig9"></a>
+	<img style="width:40.0%;" src="figures/Fig9.png" alt="">
+	<figcaption>Figure 9: Violin plot. </figcaption>
+</figure>
+<br>
 
 ## Skyline plots
 
@@ -302,6 +354,13 @@ In a skyline analysis, we are interested in visualizing the estimated rates over
 	title("Hepatitis C in Egypt", adj = 0)
 ```
 
+<figure>
+	<a id="Fig10"></a>
+	<img style="width:40.0%;" src="figures/Fig10.png" alt="">
+	<figcaption>Figure 10: Skyline plot. </figcaption>
+</figure>
+<br>
+
 ## Arranging plots
 
 In the previous example of skyline plot, we combined the visualizations of `Re` and the `becoming uninfectious rate` estimates. Grouping plots together can be useful to have a comprehensive understanding of the data or in identifying patterns and emphasizing key findings.
@@ -331,6 +390,13 @@ You can arrange plots with the operator `+`. With the operator `|` the plots wil
   		plot_layout(widths = c(0.7, 0.3)) 
 
 ```
+
+<figure>
+	<a id="Fig11"></a>
+	<img style="width:40.0%;" src="figures/Fig11.png" alt="">
+	<figcaption>Figure 11: Arranged plots. </figcaption>
+</figure>
+<br>
 
 # About color palettes
 
