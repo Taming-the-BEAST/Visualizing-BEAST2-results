@@ -79,7 +79,7 @@ The R code below will install the metapackage `treedataverse` {% cite treedatave
 /master-refs %}. We will also use library `ggsci` which has nice color palettes {% cite ggsci2024 --file Visualizing-BEAST2-results
 /master-refs %}.
 
-```R
+```{r}
 	# Install packages
 	install.packages("BiocManager")
 	install.packages("ggsci")
@@ -94,14 +94,14 @@ The R code below will install the metapackage `treedataverse` {% cite treedatave
 
 In general, we will visualize a summary tree from the posterior samples of trees, e.g. we can create a Maximum Clade Credibility (MCC) tree with TreeAnnotator.
 
-```R
-	tree_file <- "precooked_runs/Primates.MCC.tree"
+```{r}
+	tree_file <- "https://github.com/Taming-the-BEAST/Visualizing-BEAST2-results/raw/refs/heads/main/precooked_runs/Primates.MCC.tree" 
 	tree <- read.beast(tree_file)
 ```
 
 ### 3. Plot the tree with backward in time axis
 
-```R
+```{r}
 	p <- ggtree(tree,  mrsd = NULL) + 
   		theme_tree2() + # This ggtree theme will add a forward in time x-axis
   		labs(caption="million of years")
@@ -121,7 +121,7 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
 
 ### 4. Customize tree labels
 
-```R
+```{r}
 	p1 <- p +
   		geom_tiplab(size = 3, hjust = -0.1) + # add the tip labels
   		geom_nodelab(aes(label = round(posterior, 3)), 
@@ -140,7 +140,7 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
 
 ### 5. Add error bars
 
-```R
+```{r}
 	p1 <- p1 +
   		geom_range(range = 'height_0.95_HPD',
              	color = pal_jco("default")(1), alpha = 0.2, size = 2) 
@@ -155,7 +155,7 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
 
 ### 6. Customize tips and color
 
-```R
+```{r}
 	p1 <- p1 +
   		geom_point(aes(color = isTip)) + # add tip points and color by tip/internal node
   		theme(legend.position = "none") + # hide the legend
@@ -176,7 +176,7 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
 
 If you have external data you can add it to your ggtree object and use it to highlight specific branches or clades.
 
-```R
+```{r}
 
 	# Data with cleaned label and classification
 	# Usually you will have this information in a file that you can directly load:
@@ -238,7 +238,7 @@ The posterior samples of the model parameters are in the `.log` file. This file 
 
 ### 1. Install and load the required packages
 
-```R
+```{r}
 	BiocManager::install("laduplessis/beastio")
 
 	library(tidyr)
@@ -250,8 +250,8 @@ The posterior samples of the model parameters are in the `.log` file. This file 
 
 ### 2. Read the .log file
 
-```R
-	file <- "precooked_runs/primate-mtDNA_long.log"
+```{r}
+	file <- "https://github.com/Taming-the-BEAST/Visualizing-BEAST2-results/raw/refs/heads/main/precooked_runs/primate-mtDNA_long.log"
 
 	# Read log file with 10% burnin
 	trace_mcmc <- beastio::readLog(file, burnin = 0.1, as.mcmc = TRUE) # as mcmc object
@@ -266,7 +266,7 @@ The posterior samples of the model parameters are in the `.log` file. This file 
 
 Depending on the figure you would like to create, you may need to tidy the data to make it suitable for `ggplot` ([more on tidy data](https://r4ds.had.co.nz/tidy-data.html)).
 
-```R
+```{r}
 	# Select mutation rates parameters and prepare the data for plotting
 	mut_rates <- beastio::getLogFileSubset(trace, pattern = "mutationRate") %>%
   		pivot_longer(everything(), names_to = "mutationRate", values_to = "value") %>%
@@ -283,7 +283,7 @@ Select the appropriate type of plot for visualizing the posterior distribution. 
 
 - **Density Plot**: Use the `geom_density` function to create a density plot. This will estimate and display the probability density function of the parameter values.
 
-```R
+```{r}
 	# Density plot
 	ggplot() +
 		geom_density(data = mut_rates,
@@ -308,7 +308,7 @@ Select the appropriate type of plot for visualizing the posterior distribution. 
 
 - **Boxplot and Violin Plot**: Use `geom_boxplot` and `geom_violi`n functions to create boxplots and violin plots.
 
-```R
+```{r}
 	p_mut_rates <- ggplot(data = mut_rates,
 			aes(x = mutationRate, y = value, color = mutationRate, fill = mutationRate)) +
   		geom_violin(alpha = 0.2) +
@@ -333,14 +333,14 @@ Select the appropriate type of plot for visualizing the posterior distribution. 
 In a skyline analysis, we are interested in visualizing the estimated rates over time. Follow the steps on the Skyline Plots Tutorial for a more detailed explanation on how to create a skyline plot in R with the `bdskytools` {% cite bdskytools2016 --file Visualizing-BEAST2-results
 /master-refs %} package. You can find the code from that tutorial in the next code snippet:
 
-```R
+```{r}
 	BiocManager::install("laduplessis/bdskytools")
 	library(bdskytools)
 ```
 
 
-```R
-	file_bdsky <- "precooked_runs/hcv_bdsky.log"   
+```{r}
+	file_bdsky <- "https://github.com/Taming-the-BEAST/Visualizing-BEAST2-results/raw/refs/heads/main/precooked_runs/hcv_bdsky.log"   
 	trace_bdsky  <- readLogfile(file_bdsky, burnin = 0.1)
 
 	Re_sky <- getSkylineSubset(trace_bdsky, "reproductiveNumber")
@@ -380,13 +380,13 @@ In R, there are various methods to arrange plots together. You can plot several 
 
 In the following example we will show how to use `patchwork` ([https://patchwork.data-imaginist.com/](https://patchwork.data-imaginist.com/)).
 
-```R
+```{r}
 	install.packages("patchwork")
 ```
 
 You can arrange plots with the operator `+`. With the operator `|` the plots will be next to each other and with `/` they will be placed on top of each other. You can adjust the number of columns, widths and more with `plot_layout()`.
 
-```R
+```{r}
 
 	library(patchwork)
 
