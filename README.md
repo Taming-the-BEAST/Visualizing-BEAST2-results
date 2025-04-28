@@ -22,7 +22,8 @@ In most BEAST2 analyses, the results consist of two files: the posterior sample 
 
 ### BEAST2 - Bayesian Evolutionary Analysis Sampling Trees 2
 
-BEAST2 (http://www.beast2.org) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial assumes that the files came from analyses using the BEAST2 version v{{ page.beastversion }} {% cite Bouckaert2014 Bouckaert2019 --file Troubleshooting-initialization-issues/master-refs %}.
+BEAST2 (http://www.beast2.org) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial assumes that the files came from analyses using the BEAST2 version v{{ page.beastversion }} {% cite Bouckaert2014 Bouckaert2019 --file Visualizing-BEAST2-results
+/master-refs %}.
 
 ### R and RStudio
 R ([https://www.r-project.org](https://www.r-project.org)) is a programming language and software environment designed for statistical computing, data analysis, and graphical visualization. It is widely used in bioinformatics, data science, and statistical modeling due to its extensive package ecosystem and flexibility.
@@ -37,8 +38,23 @@ We will install R packages for data processing and visualisation along the way.
 
 When generating scientific figures based on abundant Bayesian MCMC results, there are several important considerations to keep in mind.
 - **Display Uncertainty**: Bayesian analysis provides posterior distributions that capture the uncertainty of parameter estimates, including tree topology, branch lengths, and evolutionary rates. Displaying this uncertainty is important for robust interpretation. This can be done by showing the 95% HPD interval around key parameters, like node heights with error bars, or visualizations such as boxplots or density plots for the posterior probability of the parameters. Avoid presenting point estimates without any indication of the associated uncertainty.
+
+<figure>
+	<a id="Fig1"></a>
+	<img style="width:40.0%;" src="figures/Fig1_pnas.1319091111fig04.jpeg" alt="">
+	<figcaption>Figure 1: Divergence times of extant bears estimated under the FBD model in BEAST2. Grey horizontal bars show their uncertainty inytervals. {% cite Heath2014 --file Visualizing-BEAST2-results
+/master-refs %} </figcaption>
+</figure>
+  
 - **Clarity of Tree Representations**: Trees are complex objects depicting numerous relationships between samples. Extracting valuable insights from trees heavily relies on a clear representation. Avoid cluttering the tree with too many branches or overlapping labels. Use annotations to highlight key clades or important nodes in the tree. Don’t forget to include the scale or axis in your tree.
 - **Tell a story**: With the abundance of information in BEAST2 results, it is important to have a clear objective for the main result you wish to communicate. Otherwise, the figure may become excessively complex and lose its meaning. Utilize color, shape, and size variations to emphasize significant patterns. Incorporate the temporal and geographical information present in the parameters, such as utilizing skyline plots or geographical maps instead of visualizing individual parameters. Prior to plotting, summarize or transform the results if needed.
+
+<figure>
+	<a id="Fig2"></a>
+	<img style="width:40.0%;" src="figures/Fig2" alt="">
+	<figcaption>Figure 2: Tell a story: [Nextrain](https://moodle-app2.let.ethz.ch/pluginfile.php/2059786/mod_resource/content/1/nextstrain.org) provides interactive visualization of pathogen genome data </figcaption>
+</figure>
+  
 - **Experiment**. There is not just one way of visualizing a set of results, so do not be afraid of experimenting with different type of plots. Interactive visualization tools can also be useful to interpret and communicate complex data. These tools enable exploration and manipulation of the results in real time, so they will work well for online and interactive presentations (but not for in a PDF document).
 
 Remember, figures should be self-explanatory and provide sufficient context to be understood. Seek feedback from colleagues or mentors to improve the clarity and effectiveness of your figures.
