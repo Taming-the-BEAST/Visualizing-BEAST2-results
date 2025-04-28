@@ -89,7 +89,7 @@ The R code below will install the metapackage *treedataverse* that includes seve
 In general, we will visualize a summary tree from the posterior samples of trees, e.g. we can create a Maximum Clade Credibility (MCC) tree with TreeAnnotator.
 
 ```R
-	tree_file <- "data/Primates.MCC.tree"
+	tree_file <- "precooked_runs/Primates.MCC.tree"
 	tree <- read.beast(tree_file)
 ```
 
@@ -241,7 +241,7 @@ The posterior samples of the model parameters are in the `.log` file. This file 
 ### 2. Read the .log file
 
 ```R
-	file <- "data/primate-mtDNA_long.log"
+	file <- "precooked_runs/primate-mtDNA_long.log"
 
 	# Read log file with 10% burnin
 	trace_mcmc <- beastio::readLog(file, burnin = 0.1, as.mcmc = TRUE) # as mcmc object
@@ -329,7 +329,7 @@ In a skyline analysis, we are interested in visualizing the estimated rates over
 
 
 ```R
-	file_bdsky <- "data/hcv_bdsky.log"   
+	file_bdsky <- "precooked_runs/hcv_bdsky.log"   
 	trace_bdsky  <- readLogfile(file_bdsky, burnin = 0.1)
 
 	Re_sky <- getSkylineSubset(trace_bdsky, "reproductiveNumber")
