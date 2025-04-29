@@ -39,9 +39,9 @@ We will install R packages for data processing and visualisation along the way.
 When generating scientific figures based on abundant Bayesian MCMC results, there are several important considerations to keep in mind.
 - **Display Uncertainty**: Bayesian analysis provides posterior distributions that capture the uncertainty of parameter estimates, including tree topology, branch lengths, and evolutionary rates. Displaying this uncertainty is important for robust interpretation. This can be done by showing the 95% HPD interval around key parameters, like node heights with error bars, or visualizations such as boxplots or density plots for the posterior probability of the parameters. Avoid presenting point estimates without any indication of the associated uncertainty.
 
-<figure>
+<figure align="center">
 	<a id="Fig1"></a>
-	<img style="width:40.0%;" src="figures/Fig1_pnas.1319091111fig04.jpeg" alt="">
+	<img style="width:70.0%;" src="figures/Fig1_pnas.1319091111fig04.jpeg" alt="">
 	<figcaption>Figure 1: Divergence times of extant bears estimated under the FBD model in BEAST2. Grey horizontal bars show their uncertainty inytervals. {% cite Heath2014 --file Visualizing-BEAST2-results
 /master-refs %} </figcaption>
 </figure>
@@ -51,9 +51,9 @@ When generating scientific figures based on abundant Bayesian MCMC results, ther
 - **Clarity of Tree Representations**: Trees are complex objects depicting numerous relationships between samples. Extracting valuable insights from trees heavily relies on a clear representation. Avoid cluttering the tree with too many branches or overlapping labels. Use annotations to highlight key clades or important nodes in the tree. Don’t forget to include the scale or axis in your tree.
 - **Tell a story**: With the abundance of information in BEAST2 results, it is important to have a clear objective for the main result you wish to communicate. Otherwise, the figure may become excessively complex and lose its meaning. Utilize color, shape, and size variations to emphasize significant patterns. Incorporate the temporal and geographical information present in the parameters, such as utilizing skyline plots or geographical maps instead of visualizing individual parameters. Prior to plotting, summarize or transform the results if needed.
 
-<figure>
+<figure align="center">
 	<a id="Fig2"></a>
-	<img style="width:40.0%;" src="figures/Fig2.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig2.png" alt="">
 	<figcaption>Figure 2: Tell a story: [Nextrain](https://nextstrain.org) provides interactive visualization of pathogen genome data </figcaption>
 </figure>
 <br>
@@ -109,9 +109,9 @@ In general, we will visualize a summary tree from the posterior samples of trees
 	p
 ```
 
-<figure>
+<figure align="center">
 	<a id="Fig3"></a>
-	<img style="width:40.0%;" src="figures/Fig3.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig3.png" alt="">
 	<figcaption>Figure 3: Tree with backward in time axis. </figcaption>
 </figure>
 <br>
@@ -131,9 +131,9 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
 	p1
 ```
 
-<figure>
+<figure align="center">
 	<a id="Fig4"></a>
-	<img style="width:40.0%;" src="figures/Fig4.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig4.png" alt="">
 	<figcaption>Figure 4: Tree with custom labels. </figcaption>
 </figure>
 <br>
@@ -146,9 +146,9 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
              	color = pal_jco("default")(1), alpha = 0.2, size = 2) 
 	p1
 ```
-<figure>
+<figure align="center">
 	<a id="Fig5"></a>
-	<img style="width:40.0%;" src="figures/Fig5.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig5.png" alt="">
 	<figcaption>Figure 5: Tree with error bars. </figcaption>
 </figure>
 <br>
@@ -164,9 +164,9 @@ Usually, with epidemiological datasets, you will want a forward in time x-axis i
 
 ```
 
-<figure>
+<figure align="center">
 	<a id="Fig6"></a>
-	<img style="width:40.0%;" src="figures/Fig6.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig6.png" alt="">
 	<figcaption>Figure 6: Tree with custom tips and color. </figcaption>
 </figure>
 <br>
@@ -217,9 +217,9 @@ If you have external data you can add it to your ggtree object and use it to hig
 
 ```
 
-<figure>
+<figure align="center">
 	<a id="Fig7"></a>
-	<img style="width:40.0%;" src="figures/Fig7.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig7.png" alt="">
 	<figcaption>Figure 7: Tree with external data. </figcaption>
 </figure>
 <br>
@@ -299,9 +299,9 @@ Select the appropriate type of plot for visualizing the posterior distribution. 
   		xlab("Mutation rate")
 ```
 
-<figure>
+<figure align="center">
 	<a id="Fig8"></a>
-	<img style="width:40.0%;" src="figures/Fig8.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig8.png" alt="">
 	<figcaption>Figure 8: Density plot. </figcaption>
 </figure>
 <br>
@@ -321,9 +321,9 @@ Select the appropriate type of plot for visualizing the posterior distribution. 
 	p_mut_rates + labs(title = "Primate mitochondrial genome estimated mutation rate") 
 ```
 
-<figure>
+<figure align="center">
 	<a id="Fig9"></a>
-	<img style="width:40.0%;" src="figures/Fig9.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig9.png" alt="">
 	<figcaption>Figure 9: Violin plot. </figcaption>
 </figure>
 <br>
@@ -365,9 +365,9 @@ In a skyline analysis, we are interested in visualizing the estimated rates over
 	title("Hepatitis C in Egypt", adj = 0)
 ```
 
-<figure>
+<figure align="center">
 	<a id="Fig10"></a>
-	<img style="width:40.0%;" src="figures/Fig10.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig10.png" alt="">
 	<figcaption>Figure 10: Skyline plot. </figcaption>
 </figure>
 <br>
@@ -402,9 +402,9 @@ You can arrange plots with the operator `+`. With the operator `|` the plots wil
 
 ```
 
-<figure>
+<figure align="center">
 	<a id="Fig11"></a>
-	<img style="width:40.0%;" src="figures/Fig11.png" alt="">
+	<img style="width:70.0%;" src="figures/Fig11.png" alt="">
 	<figcaption>Figure 11: Arranged plots. </figcaption>
 </figure>
 <br>
