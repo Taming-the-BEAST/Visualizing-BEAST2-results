@@ -22,8 +22,7 @@ In most BEAST2 analyses, the results consist of two files: the posterior sample 
 
 ### BEAST2 - Bayesian Evolutionary Analysis Sampling Trees 2
 
-BEAST2 (http://www.beast2.org) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial assumes that the files came from analyses using the BEAST2 version v{{ page.beastversion }} {% cite Bouckaert2014 Bouckaert2019 --file Visualizing-BEAST2-results
-/master-refs %}.
+BEAST2 (http://www.beast2.org) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial assumes that the files came from analyses using the BEAST2 version v{{ page.beastversion }} {% cite Bouckaert2014 Bouckaert2019 --file Visualizing-BEAST2-results/master-refs %}.
 
 ### R and RStudio
 R ([https://www.r-project.org](https://www.r-project.org)) is a programming language and software environment designed for statistical computing, data analysis, and graphical visualization. It is widely used in bioinformatics, data science, and statistical modeling due to its extensive package ecosystem and flexibility.
@@ -42,8 +41,7 @@ When generating scientific figures based on abundant Bayesian MCMC results, ther
 <figure align="center">
 	<a id="Fig1"></a>
 	<img style="width:70.0%;" src="figures/Fig1_pnas.1319091111fig04.jpeg" alt="">
-	<figcaption>Figure 1: Divergence times of extant bears estimated under the FBD model in BEAST2. Grey horizontal bars show their uncertainty inytervals. {% cite Heath2014 --file Visualizing-BEAST2-results
-/master-refs %} </figcaption>
+	<figcaption>Figure 1: Divergence times of extant bears estimated under the FBD model in BEAST2. Grey horizontal bars show their uncertainty inytervals. {% cite Heath2014 --file Visualizing-BEAST2-results/master-refs %} </figcaption>
 </figure>
 <br>
 
@@ -71,13 +69,7 @@ To visualize trees there are multiple tools and packages available: [FigTree](ht
 
 ### 1. Install and load the required packages
 
-The R code below will install the metapackage `treedataverse` {% cite treedataverse2025 --file Visualizing-BEAST2-results
-/master-refs %}  that includes several useful packages for processing and visualizing trees in R: `treeio` {% cite treeio2020 --file Visualizing-BEAST2-results
-/master-refs %}, `ggtree` {% cite ggtree2017 --file Visualizing-BEAST2-results
-/master-refs %}, `ggtreeExtra` {% cite ggtreeExtra2021 --file Visualizing-BEAST2-results
-/master-refs %} and `tidytree` {% cite tidytree2022 --file Visualizing-BEAST2-results
-/master-refs %}. We will also use library `ggsci` which has nice color palettes {% cite ggsci2024 --file Visualizing-BEAST2-results
-/master-refs %}.
+The R code below will install the metapackage `treedataverse` {% cite treedataverse2025 --file Visualizing-BEAST2-results/master-refs %}  that includes several useful packages for processing and visualizing trees in R: `treeio` {% cite treeio2020 --file Visualizing-BEAST2-results/master-refs %}, `ggtree` {% cite ggtree2017 --file Visualizing-BEAST2-results/master-refs %}, `ggtreeExtra` {% cite ggtreeExtra2021 --file Visualizing-BEAST2-results/master-refs %} and `tidytree` {% cite tidytree2022 --file Visualizing-BEAST2-results/master-refs %}. We will also use library `ggsci` which has nice color palettes {% cite ggsci2024 --file Visualizing-BEAST2-results/master-refs %}.
 
 ```{r}
 	# Install packages
