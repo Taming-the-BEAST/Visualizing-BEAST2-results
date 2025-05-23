@@ -222,11 +222,7 @@ The book [“Data Integration, Manipulation and Visualization of Phylogenetic Tr
 
 # How to visualize parameter posterior samples in R with beastio and ggplot2
 
-The posterior samples of the model parameters are in the `.log` file. This file is a text file that we can read into R and manipulate as a dataframe. However, there are packages that facilitate the data manipulation and processing of log files. In the following examples we will use the `beastio` {% cite beastio2023 --file Visualizing-BEAST2-results
-/master-refs %} package to this purpose, and `ggplot2` {% cite ggplot22016 --file Visualizing-BEAST2-results
-/master-refs %} for data visualization. We will also make use from `tidyr` {% cite tidyr2023 --file Visualizing-BEAST2-results
-/master-refs %} and `tibble` {% cite tibble2023 --file Visualizing-BEAST2-results
-/master-refs %} packages for data manipulation.
+The posterior samples of the model parameters are in the `.log` file. This file is a text file that we can read into R and manipulate as a dataframe. However, there are packages that facilitate the data manipulation and processing of log files. In the following examples we will use the `beastio` {% cite beastio2023 --file Visualizing-BEAST2-results/master-refs %} package to this purpose, and `ggplot2` {% cite ggplot22016 --file Visualizing-BEAST2-results/master-refs %} for data visualization. We will also make use from `tidyr` {% cite tidyr2023 --file Visualizing-BEAST2-results/master-refs %} and `tibble` {% cite tibble2023 --file Visualizing-BEAST2-results/master-refs %} packages for data manipulation.
 
 ### 1. Install and load the required packages
 
@@ -322,8 +318,7 @@ Select the appropriate type of plot for visualizing the posterior distribution. 
 
 ## Skyline plots
 
-In a skyline analysis, we are interested in visualizing the estimated rates over time. Follow the steps on the Skyline Plots Tutorial for a more detailed explanation on how to create a skyline plot in R with the `bdskytools` {% cite bdskytools2016 --file Visualizing-BEAST2-results
-/master-refs %} package. You can find the code from that tutorial in the next code snippet:
+In a skyline analysis, we are interested in visualizing the estimated rates over time. Follow the steps on the Skyline Plots Tutorial for a more detailed explanation on how to create a skyline plot in R with the `bdskytools` {% cite bdskytools2016 --file Visualizing-BEAST2-results/master-refs %} package. You can find the code from that tutorial in the next code snippet:
 
 ```{r}
 	BiocManager::install("laduplessis/bdskytools")
@@ -426,12 +421,10 @@ And here is a useful article about the topic: [best color palettes for scientifi
 
 There are very good resources for data visualization in R. Here some of our favorites:
 
-- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) {% cite wilke2019 --file Visualizing-BEAST2-results
-/master-refs %} A guide to making visualizations that “accurately reflect the data, tell a story, and look professional.” Amazing resource to understand the best way to visualize each type of data and with useful advice on how to communicate a message with it.
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) {% cite wilke2019 --file Visualizing-BEAST2-results/master-refs %} A guide to making visualizations that “accurately reflect the data, tell a story, and look professional.” Amazing resource to understand the best way to visualize each type of data and with useful advice on how to communicate a message with it.
 - [The R Graph Gallery](https://r-graph-gallery.com/): A comprehensive online collection of diverse and visually appealing data visualizations created using R. Great for inspiration!
 - [ggplot2 Package Documentation](https://ggplot2.tidyverse.org/): The official documentation for the ggplot2 package provides detailed explanations and examples for each function and feature. It also includes a Cheatsheet!
-- [The R Graphics Cookbook](https://r-graphics.org/) {% cite chang2018 --file Visualizing-BEAST2-results
-/master-refs %} offers practical recipes and examples for creating a wide range of plots using ggplot2.
+- [The R Graphics Cookbook](https://r-graphics.org/) {% cite chang2018 --file Visualizing-BEAST2-results/master-refs %} offers practical recipes and examples for creating a wide range of plots using ggplot2.
 
 ----
 
